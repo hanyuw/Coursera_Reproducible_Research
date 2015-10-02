@@ -1,0 +1,58 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+
+
+## Loading and preprocessing the data
+```{r}
+## Load ggplot2
+library(ggplot2)
+
+## Load activity table, Transform the date into date syntax.
+act = read.csv("activity.csv", sep = ",", header = TRUE, na.strings = "NA")
+act$date = as.Date(act$date, format = "%m/%d/%Y")
+
+```
+
+
+## What is mean total number of steps taken per day?
+- Calculate the mean and the median for total steps of each day:
+```{r}
+## Remove the missing values.
+act = act[complete.cases(act), ]
+
+## Split the table by the date, calculate sum of the steps for each days respectively.
+spltAct = split(act, act$date)
+ttStep = sapply(spltAct, function(x) return(sum(x$steps)))
+meanttStep = mean(ttStep)
+medianttStep = median(ttStep)
+```
+
+The mean of the total steps is `r meanttStep` steps.
+The median of the total steps is `r medianttStep` steps.
+
+- plot the histogram of the total steps count frequency:
+```{r}
+
+## Plot the histogram of the sum step for each day.
+g = ggplot(act,aes(ttStep))
+g + geom_histogram(binwidth = 700) + labs(title = "Total steps frequency count", x = "Steps taken in each day")
+
+```
+
+### Calculate the mean and the median for sum steps of each day:
+
+
+
+## What is the average daily activity pattern?
+
+
+
+## Imputing missing values
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?
